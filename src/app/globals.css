@@ -1,26 +1,266 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-noto);
+  --font-mono: var(--font-jetbrains);
+
+  /* Shadcn colors */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Extended palette for design system */
+  --color-background-800: var(--background-800);
+  --color-background-900: var(--background-900);
+  --color-background-950: var(--background-950);
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
+  --color-primary-400: var(--primary-400);
+  --color-text-50: var(--text-50);
+  --color-text-300: var(--text-300);
+  --color-text-400: var(--text-400);
+  --color-text-700: var(--text-700);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ===== Design System: DevOps meets Nature/Tech ===== */
+/* Dark Mode First - única paleta */
+
+:root {
+  --radius: 0.5rem;
+
+  /* Background (Deep Forest) */
+  --background-50: #f0f9f5;
+  --background-100: #d0e8dc;
+  --background-200: #a1d1b9;
+  --background-300: #72ba96;
+  --background-400: #43a373;
+  --background-500: #2d8c5a;
+  --background-600: #237048;
+  --background-700: #1a5436;
+  --background-800: #0f241d;
+  --background-900: #0a1813;
+  --background-950: #07120f;
+
+  /* Text (Mint White) */
+  --text-50: #eef6f3;
+  --text-100: #d4e8df;
+  --text-200: #b9dacb;
+  --text-300: #9eccb7;
+  --text-400: #7ab89d;
+  --text-500: #5aa483;
+  --text-600: #478369;
+  --text-700: #35624f;
+  --text-800: #234135;
+  --text-900: #12211b;
+  --text-950: #09100d;
+
+  /* Primary (Verde estrutural) */
+  --primary-50: #effbf5;
+  --primary-100: #d7f5e6;
+  --primary-200: #afeacd;
+  --primary-300: #87dfb4;
+  --primary-400: #63cfa2;
+  --primary-500: #3dbf8a;
+  --primary-600: #31996e;
+  --primary-700: #257353;
+  --primary-800: #194d37;
+  --primary-900: #0d261c;
+  --primary-950: #06130e;
+
+  /* Accent (Neon Green - CTAs) */
+  --accent-50: #edfef5;
+  --accent-100: #d3fce5;
+  --accent-200: #a7f9cb;
+  --accent-300: #7bf6b1;
+  --accent-400: #4ff397;
+  --accent-500: #22dd8f;
+  --accent-600: #1bb172;
+  --accent-700: #148556;
+  --accent-800: #0e5839;
+  --accent-900: #072c1d;
+  --accent-950: #03160e;
+
+  /* Semantic mappings */
+  --background: var(--background-950);
+  --foreground: var(--text-50);
+  --card: var(--background-900);
+  --card-foreground: var(--text-50);
+  --popover: var(--background-900);
+  --popover-foreground: var(--text-50);
+  --primary: var(--accent-500);
+  --primary-foreground: var(--background-950);
+  --secondary: var(--background-800);
+  --secondary-foreground: var(--text-300);
+  --muted: var(--background-800);
+  --muted-foreground: var(--text-400);
+  --accent: var(--background-800);
+  --accent-foreground: var(--text-50);
+  --destructive: #ef4444;
+  --border: var(--background-700);
+  --input: var(--background-800);
+  --ring: var(--accent-500);
+
+  /* Charts */
+  --chart-1: var(--accent-500);
+  --chart-2: var(--primary-400);
+  --chart-3: var(--text-400);
+  --chart-4: var(--accent-600);
+  --chart-5: var(--primary-600);
+
+  /* Sidebar */
+  --sidebar: var(--background-900);
+  --sidebar-foreground: var(--text-50);
+  --sidebar-primary: var(--accent-500);
+  --sidebar-primary-foreground: var(--background-950);
+  --sidebar-accent: var(--background-800);
+  --sidebar-accent-foreground: var(--text-50);
+  --sidebar-border: var(--background-700);
+  --sidebar-ring: var(--accent-500);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans), system-ui, sans-serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ===== Custom Animations ===== */
+
+/* Cursor blink for terminal */
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.animate-cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* Pulse for status indicators */
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(34, 221, 143, 0.5);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(34, 221, 143, 0.8);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Typing effect base */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ===== Utility Classes ===== */
+
+/* Glow effect for buttons */
+.glow-accent {
+  box-shadow: 0 0 20px rgba(34, 221, 143, 0.3);
+}
+
+.glow-accent-strong {
+  box-shadow: 0 0 30px rgba(34, 221, 143, 0.5);
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(15, 36, 29, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-strong {
+  background: rgba(10, 24, 19, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Typography utilities */
+.font-heading {
+  font-family: var(--font-heading), sans-serif;
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-400) 0%, var(--accent-500) 50%, var(--primary-400) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Terminal style text */
+.terminal-text {
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  color: var(--text-400);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-900);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--background-700);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-600);
 }
