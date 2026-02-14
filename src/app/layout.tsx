@@ -55,6 +55,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body
         className={`${inter.variable} ${notoSans.variable} ${jetbrainsMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <Navbar />
         <main className="min-h-screen">{children}</main>

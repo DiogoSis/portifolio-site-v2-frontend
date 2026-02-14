@@ -1,11 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { TimelineVertical, TimelineItem } from "@/components/sobre/timeline-vertical";
 import { SoftSkillsBadges } from "@/components/sobre/soft-skills-badges";
-import { FormationCard, Formation } from "@/components/sobre/formation-card";
-import { User, Target, Heart, Loader2 } from "lucide-react";
-import { apiService } from "@/lib/api-service";
+import { User, Target, Heart } from "lucide-react";
 
 const timelineItems: TimelineItem[] = [
   {
@@ -64,32 +61,6 @@ const softSkills = [
 ];
 
 export default function SobrePage() {
-  const [formations, setFormations] = useState<Formation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchFormations() {
-      try {
-        setLoading(true);
-        const data = await apiService.getFormations();
-        const formattedFormations: Formation[] = data.map((form) => ({
-          ...form,
-          id: form.id.toString(),
-        }));
-        setFormations(formattedFormations);
-        setError(null);
-      } catch (err) {
-        console.error("Erro ao carregar formações:", err);
-        setError("Não foi possível carregar as formações.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchFormations();
-  }, []);
-
   return (
     <div className="pt-24 pb-16">
       <div className="container mx-auto px-4">
@@ -159,36 +130,6 @@ export default function SobrePage() {
             Soft Skills
           </h2>
           <SoftSkillsBadges skills={softSkills} />
-        </section>
-
-        {/* Formations */}
-        <section className="mb-12 sm:mb-16">
-          <h2 className="font-heading font-bold text-xl sm:text-2xl text-text-50 mb-4 sm:mb-6">
-            Formações
-          </h2>
-          
-          {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="flex flex-col items-center gap-4">
-                <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 animate-spin text-accent-500" />
-                <p className="text-text-400 text-sm sm:text-base">Carregando formações...</p>
-              </div>
-            </div>
-          ) : error ? (
-            <div className="text-center py-12">
-              <p className="text-red-400 text-sm sm:text-base">{error}</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              {formations.map((formation, index) => (
-                <FormationCard
-                  key={formation.id}
-                  formation={formation}
-                  index={index}
-                />
-              ))}
-            </div>
-          )}
         </section>
 
         {/* Timeline */}

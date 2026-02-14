@@ -1,24 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { CertificateCard, Certificate } from "@/components/certificacoes/certificate-card";
+import { FormationCard, Formation } from "@/components/certificacoes/formation-card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GraduationCap, Cloud, Code, LayoutGrid, Loader2 } from "lucide-react";
+import { GraduationCap, Cloud, Code, LayoutGrid, Loader2, Award, LucideIcon } from "lucide-react";
 import { apiService } from "@/lib/api-service";
 import { Certificate as ApiCertificate } from "@/lib/api-types";
 
-const categories = [
-  { value: "todos", label: "Todos", icon: LayoutGrid },
-  { value: "Academico", label: "Acadêmico", icon: GraduationCap },
-  { value: "Cloud", label: "Cloud", icon: Cloud },
-  { value: "Dev", label: "Desenvolvimento", icon: Code },
-];
+// Mapeamento de ícones para categorias conhecidas
+const categoryIcons: Record<string, LucideIcon> = {
+  "Acadêmico": GraduationCap,
+  "Cloud": Cloud,
+  "Desenvolvimento": Code,
+  "Dev": Code,
+  "Cloud Computing": Cloud,
+  // Ícone padrão para categorias não mapeadas
+  "default": Award,
+};
 
 export default function CertificacoesPage() {
-  const [selectedCategory, setSelectedCategory] = useState("todos");
+  const [selectedFormationArea, setSelectedFormationArea] = useState("todos");
+  const [selectedCertificateCategory, setSelectedCertificateCategory] = useState("todos");
   const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [formations, setFormations] = useState<Formation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingFormations, setLoadingFormations] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [errorFormations, setErrorFormations] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     async function fetchCertificates() {
@@ -43,17 +57,99 @@ export default function CertificacoesPage() {
     fetchCertificates();
   }, []);
 
-  const filteredCertificates =
-    selectedCategory === "todos"
-      ? certificates
-      : certificates.filter((c) => c.categoryCode === selectedCategory);
+  useEffect(() => {
+    async function fetchFormations() {
+      try {
+        setLoadingFormations(true);
+        const data = await apiService.getFormations();
+        const formattedFormations: Formation[] = data.map((form) => ({
+          ...form,
+          id: form.id.toString(),
+        }));
+        setFormations(formattedFormations);
+        setErrorFormations(null);
+      } catch (err) {
+        console.error("Erro ao carregar formações:", err);
+        setErrorFormations("Não foi possível carregar as formações.");
+      } finally {
+        setLoadingFormations(false);
+      }
+    }
 
-  if (loading) {
+    fetchFormations();
+  }, []);
+
+  // Extrai áreas únicas das formações
+  const formationAreas = useMemo(() => {
+    const uniqueAreas = Array.from(
+      new Set(
+        formations
+          .map((formation) => formation.area)
+          .filter((area) => area && area.trim() !== "")
+      )
+    ).sort();
+
+    return [
+      { value: "todos", label: "Todas", icon: LayoutGrid },
+      ...uniqueAreas.map((area) => ({
+        value: area,
+        label: area,
+        icon: GraduationCap,
+      })),
+    ];
+  }, [formations]);
+
+  // Extrai categorias únicas dos certificados
+  const certificateCategories = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(
+        certificates
+          .map((cert) => cert.categoryCode)
+          .filter((code) => code && code.trim() !== "")
+      )
+    ).sort();
+
+    return [
+      { value: "todos", label: "Todos", icon: LayoutGrid },
+      ...uniqueCategories.map((categoryCode) => ({
+        value: categoryCode,
+        label: categoryCode,
+        icon: categoryIcons[categoryCode] || categoryIcons["default"],
+      })),
+    ];
+  }, [certificates]);
+
+  // Filtra formações por área
+  const filteredFormations =
+    selectedFormationArea === "todos"
+      ? formations
+      : formations.filter((f) => f.area === selectedFormationArea);
+
+  // Filtra certificados por categoria
+  const filteredCertificates =
+    selectedCertificateCategory === "todos"
+      ? certificates
+      : certificates.filter((c) => c.categoryCode === selectedCertificateCategory);
+
+  // Calcula estatísticas por categoria de certificados
+  const certificateStats = useMemo(() => {
+    const stats: Record<string, number> = {};
+    certificates.forEach((cert) => {
+      const category = cert.categoryCode || "Outros";
+      stats[category] = (stats[category] || 0) + 1;
+    });
+    return Object.entries(stats)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 3);
+  }, [certificates]);
+
+  // Aguarda a montagem no cliente antes de renderizar para evitar hydration mismatch
+  if (!isMounted || loading || loadingFormations) {
     return (
       <div className="pt-24 pb-16 flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-8 h-8 animate-spin text-accent-500" />
-          <p className="text-text-400">Carregando certificados...</p>
+          <p className="text-text-400">Carregando certificações e formações...</p>
         </div>
       </div>
     );
@@ -92,22 +188,90 @@ export default function CertificacoesPage() {
           </p>
         </div>
 
+        {/* Formations Section */}
+        <section className="mb-12 sm:mb-16">
+          <h2 className="font-heading font-bold text-xl sm:text-2xl text-text-50 mb-4 sm:mb-6">
+            Formações
+          </h2>
+          
+          {loadingFormations ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="flex flex-col items-center gap-4">
+                <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 animate-spin text-accent-500" />
+                <p className="text-text-400 text-sm sm:text-base">Carregando formações...</p>
+              </div>
+            </div>
+          ) : errorFormations ? (
+            <div className="text-center py-12">
+              <p className="text-red-400 text-sm sm:text-base">{errorFormations}</p>
+            </div>
+          ) : (
+            <>
+              {/* Filter Tabs for Formations */}
+              <Tabs
+                value={selectedFormationArea}
+                onValueChange={setSelectedFormationArea}
+                className="mb-6 sm:mb-8"
+              >
+                <TabsList className="bg-background-900 border border-border h-auto gap-1 p-1 w-full sm:w-auto flex-wrap">
+                  {formationAreas.map((area) => (
+                    <TabsTrigger
+                      key={area.value}
+                      value={area.value}
+                      className="data-[state=active]:bg-primary-400 data-[state=active]:text-background-950 text-text-400 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3"
+                    >
+                      <area.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                      <span>{area.label}</span>
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+
+              {/* Formations Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                {filteredFormations.map((formation, index) => (
+                  <FormationCard
+                    key={formation.id}
+                    formation={formation}
+                    index={index}
+                  />
+                ))}
+              </div>
+
+              {/* Empty State for Formations */}
+              {filteredFormations.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-text-400 text-sm sm:text-base">
+                    Nenhuma formação encontrada nesta área.
+                  </p>
+                </div>
+              )}
+            </>
+          )}
+        </section>
+
+        <div className="border-t border-border mb-8 sm:mb-12"></div>
+
+        {/* Certificates Section */}
+        <h2 className="font-heading font-bold text-xl sm:text-2xl text-text-50 mb-6 sm:mb-8">
+          Certificados
+        </h2>
+
         {/* Filter Tabs */}
         <Tabs
-          defaultValue="todos"
+          value={selectedCertificateCategory}
+          onValueChange={setSelectedCertificateCategory}
           className="mb-6 sm:mb-8"
-          onValueChange={setSelectedCategory}
         >
-          <TabsList className="bg-background-900 border border-border h-auto gap-1 p-1 w-full sm:w-auto">
-            {categories.map((category) => (
+          <TabsList className="bg-background-900 border border-border h-auto gap-1 p-1 w-full sm:w-auto flex-wrap">
+            {certificateCategories.map((category) => (
               <TabsTrigger
                 key={category.value}
                 value={category.value}
-                className="data-[state=active]:bg-accent-500 data-[state=active]:text-background-950 text-text-400 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3 flex-1 sm:flex-initial"
+                className="data-[state=active]:bg-accent-500 data-[state=active]:text-background-950 text-text-400 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3"
               >
                 <category.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                <span className="hidden xs:inline">{category.label}</span>
-                <span className="xs:hidden">{category.label.substring(0, 3)}</span>
+                <span>{category.label}</span>
               </TabsTrigger>
             ))}
           </TabsList>
@@ -141,24 +305,19 @@ export default function CertificacoesPage() {
             </p>
             <p className="text-text-400 text-xs sm:text-sm">Total de Certificações</p>
           </div>
-          <div className="text-center p-4 sm:p-6 rounded-lg bg-background-900 border border-border">
-            <p className="font-heading font-bold text-2xl sm:text-3xl text-accent-500">
-              {certificates.filter((c) => c.categoryCode === "Cloud").length}
-            </p>
-            <p className="text-text-400 text-xs sm:text-sm">Certificações Cloud</p>
-          </div>
-          <div className="text-center p-4 sm:p-6 rounded-lg bg-background-900 border border-border">
-            <p className="font-heading font-bold text-2xl sm:text-3xl text-accent-500">
-              {certificates.filter((c) => c.categoryCode === "Dev").length}
-            </p>
-            <p className="text-text-400 text-xs sm:text-sm">Certificações Dev</p>
-          </div>
-          <div className="text-center p-4 sm:p-6 rounded-lg bg-background-900 border border-border">
-            <p className="font-heading font-bold text-2xl sm:text-3xl text-accent-500">
-              8+
-            </p>
-            <p className="text-text-400 text-sm">Anos de Experiência</p>
-          </div>
+          {certificateStats.map(([categoryCode, count]) => (
+            <div
+              key={categoryCode}
+              className="text-center p-4 sm:p-6 rounded-lg bg-background-900 border border-border"
+            >
+              <p className="font-heading font-bold text-2xl sm:text-3xl text-accent-500">
+                {count}
+              </p>
+              <p className="text-text-400 text-xs sm:text-sm">
+                {categoryCode}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
