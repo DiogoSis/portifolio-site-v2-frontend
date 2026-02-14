@@ -15,6 +15,7 @@ import {
   MessageSquare,
   BookOpen,
   Package,
+  Notebook,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -35,18 +36,18 @@ const hardware = [
     icon: Monitor,
   },
   {
-    tipo: "mobile",
-    nome: "Motorola G35",
-    specs: "Android 14 • 128GB • 5G",
-    foco: "Testes Android, 2FA, Mobile Dev",
-    icon: Smartphone,
-  },
-  {
     tipo: "server",
     nome: "Homelab Server",
     specs: "Intel i5-10400 • 64GB ECC • 4x4TB RAID",
     foco: "Proxmox, Docker Swarm, Backups",
     icon: Server,
+  },
+  {
+    tipo: "corporateNotebook",
+    nome: "Notebook de Trabalho",
+    specs: "Intel i5-12700H • 16GB DDR4 • 1TB NVMe",
+    foco: "Desenvolvimento remoto, testes de API, escritório",
+    icon: Notebook,
   },
 ];
 
@@ -75,6 +76,7 @@ const software = [
     items: [
       { nome: "VS Code", icon: Code2, desc: "IDE principal com extensões" },
       { nome: "Neovim", icon: Terminal, desc: "Edição rápida no terminal" },
+      { nome: "IntelliJ", icon: Code2, desc: "Projetos Java e backend" },
     ],
   },
   {
@@ -89,6 +91,8 @@ const software = [
     categoria: "Produtividade",
     items: [
       { nome: "Obsidian", icon: BookOpen, desc: "Second brain" },
+      { nome: "Draw.io", icon: Layers, desc: "Diagramas e fluxos" },
+      { nome: "Jira", icon: Layers, desc: "Gestão de projetos" },
       { nome: "Spotify", icon: Music, desc: "Foco com música" },
       { nome: "Discord", icon: MessageSquare, desc: "Comunidades dev" },
     ],
@@ -98,7 +102,7 @@ const software = [
 const terminalSetup = {
   shell: "Zsh + Oh My Zsh",
   tema: "Powerlevel10k",
-  terminal: "Kitty / WezTerm",
+  terminal: "Kitty / Ghostty",
   plugins: ["zsh-autosuggestions", "zsh-syntax-highlighting", "fzf", "z"],
 };
 

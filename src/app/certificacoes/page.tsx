@@ -84,10 +84,10 @@ export default function CertificacoesPage() {
             {"// Certificações"}
           </p>
           <h1 className="font-heading font-bold text-3xl sm:text-4xl md:text-5xl text-text-50 mb-4 sm:mb-6">
-            Formação & Credenciais
+            Diplomas & Certificados
           </h1>
           <p className="text-text-400 text-sm sm:text-base md:text-lg leading-relaxed">
-            Diplomas, certificações cloud e cursos de desenvolvimento que
+            Diplomas, certificados de cloud e cursos de desenvolvimento que
             validam minhas competências técnicas.
           </p>
         </div>

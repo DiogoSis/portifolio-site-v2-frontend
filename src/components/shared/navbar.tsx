@@ -17,17 +17,17 @@ const navLinks = [
 
 const socialLinks = [
   {
-    href: "https://github.com/diogoluna",
+    href: "https://github.com/DiogoSis",
     icon: Github,
     label: "GitHub",
   },
   {
-    href: "https://linkedin.com/in/diogoluna",
+    href: "https://www.linkedin.com/in/diogosis",
     icon: Linkedin,
     label: "LinkedIn",
   },
   {
-    href: "mailto:contato@diogoluna.dev",
+    href: "mailto:diogodeassis777@gmail.com",
     icon: Mail,
     label: "Email",
   },

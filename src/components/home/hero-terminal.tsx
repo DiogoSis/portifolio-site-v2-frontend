@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const terminalLines = [
   { prompt: "$ ", text: "whoami", delay: 0 },
-  { prompt: "", text: "Diogo Luna - Tech Lead & DevOps Engineer", delay: 1.5 },
+  { prompt: "", text: "Diogo Luna - Tech Lead & Software Engineer", delay: 1.5 },
   { prompt: "$ ", text: "cat skills.txt", delay: 3 },
   {
     prompt: "",

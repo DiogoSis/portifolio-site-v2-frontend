@@ -61,7 +61,7 @@ export default function StatusPage() {
         message: "feat: implementar dashboard de status real-time",
         repo: "portfolio-v2-frontend",
         timestamp: "2 horas atrás",
-        url: "https://github.com/diogoluna/portfolio-v2",
+        url: "https://github.com/DiogoSis/portfolio-v2",
         author: "Diogo Luna",
       });
 

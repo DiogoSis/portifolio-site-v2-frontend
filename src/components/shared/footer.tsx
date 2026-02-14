@@ -3,17 +3,17 @@ import { Github, Linkedin, Mail, Heart } from "lucide-react";
 
 const socialLinks = [
   {
-    href: "https://github.com/diogoluna",
+    href: "https://github.com/DiogoSis",
     icon: Github,
     label: "GitHub",
   },
   {
-    href: "https://linkedin.com/in/diogoluna",
+    href: "https://www.linkedin.com/in/diogosis",
     icon: Linkedin,
     label: "LinkedIn",
   },
   {
-    href: "mailto:contato@diogoluna.dev",
+    href: "mailto:diogodeassis777@gmail.com",
     icon: Mail,
     label: "Email",
   },
@@ -46,7 +46,7 @@ export function Footer() {
               <span className="text-accent-500 animate-cursor-blink">_</span>
             </Link>
             <p className="text-text-400 text-sm max-w-xs">
-              Tech Lead & DevOps Engineer. Construindo infraestrutura escalável
+              Tech Lead & Software Engineer. Construindo infraestrutura escalável
               e sistemas resilientes.
             </p>
           </div>

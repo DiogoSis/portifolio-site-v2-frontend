@@ -22,7 +22,7 @@ export default function Home() {
                   Diogo Luna
                 </h1>
                 <h2 className="font-heading text-2xl md:text-3xl text-primary-400">
-                  Tech Lead & DevOps Engineer
+                  Tech Lead & Software Engineer
                 </h2>
               </div>
 

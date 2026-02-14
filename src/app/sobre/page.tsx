@@ -10,7 +10,7 @@ import { apiService } from "@/lib/api-service";
 const timelineItems: TimelineItem[] = [
   {
     id: "1",
-    periodo: "2023 - Presente",
+    periodo: "2025 - Presente",
     cargo: "Tech Lead",
     empresa: "Segmedic",
     foco: "Liderança técnica de squad, arquitetura de microserviços, mentoria de desenvolvedores e definição de roadmap tecnológico.",
@@ -19,26 +19,34 @@ const timelineItems: TimelineItem[] = [
   },
   {
     id: "2",
-    periodo: "2021 - 2023",
-    cargo: "Senior Software Engineer",
-    empresa: "Empresa Anterior",
+    periodo: "2024 - 2025",
+    cargo: "Desenvolvedor FullStack Pleno",
+    empresa: "Segmedic",
     foco: "Desenvolvimento de APIs escaláveis, implementação de CI/CD, migração para cloud AWS e otimização de performance.",
     tipo: "work",
   },
-  {
+    {
     id: "3",
-    periodo: "2019 - 2021",
-    cargo: "Fullstack Developer",
-    empresa: "Startup Tech",
+    periodo: "2023 - 2027",
+    cargo: "Sistemas de Informação",
+    empresa: "Estácio de Sá",
+    foco: "Retorno ao curso Bacharelado Sistemas de Informação na universidade.",
+    tipo: "education",
+  },
+  {
+    id: "4",
+    periodo: "2023 - 2024",
+    cargo: "Fullstack Developer Junior",
+    empresa: "Segmedic",
     foco: "Desenvolvimento de aplicações web com React e Node.js, integração de sistemas e automação de processos.",
     tipo: "work",
   },
   {
-    id: "4",
-    periodo: "2015 - 2019",
+    id: "5",
+    periodo: "2018 - 2020",
     cargo: "Sistemas de Informação",
-    empresa: "Universidade",
-    foco: "Bacharelado em Sistemas de Informação com foco em engenharia de software e arquitetura de sistemas.",
+    empresa: "Universidade FEUC",
+    foco: "Inicio dos estudo em Sistemas de Informação com foco em engenharia de software e arquitetura de sistemas.",
     tipo: "education",
   },
 ];
@@ -49,7 +57,6 @@ const softSkills = [
   "Comunicação",
   "Resolução de Problemas",
   "Pensamento Estratégico",
-  "Inglês Técnico",
   "Gestão de Projetos",
   "Code Review",
   "Arquitetura de Software",
@@ -66,7 +73,6 @@ export default function SobrePage() {
       try {
         setLoading(true);
         const data = await apiService.getFormations();
-        // Converte as formações da API para o formato esperado
         const formattedFormations: Formation[] = data.map((form) => ({
           ...form,
           id: form.id.toString(),
@@ -112,7 +118,7 @@ export default function SobrePage() {
                 Quem sou
               </h3>
               <p className="text-text-400 text-sm">
-                Engenheiro de Software com mais de 8 anos de experiência,
+                Engenheiro de Software com mais de 3 anos de experiência,
                 especializado em arquitetura de sistemas distribuídos e práticas
                 DevOps.
               </p>
@@ -126,7 +132,7 @@ export default function SobrePage() {
                 O que faço
               </h3>
               <p className="text-text-400 text-sm">
-                Lidero equipes técnicas, defino arquiteturas escaláveis e
+                Lidero equipe técnica, defino arquiteturas escaláveis e
                 implemento práticas de engenharia que aceleram a entrega de
                 valor.
               </p>

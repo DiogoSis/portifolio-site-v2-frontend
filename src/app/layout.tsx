@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Diogo Luna | Tech Lead & DevOps Engineer",
+  title: "Diogo Luna | Tech Lead & Software Engineer",
   description:
     "Engenharia de Software & DevOps. Construindo infraestrutura escalável e sistemas resilientes.",
   keywords: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Diogo Luna" }],
   openGraph: {
-    title: "Diogo Luna | Tech Lead & DevOps Engineer",
+    title: "Diogo Luna | Tech Lead & Software Engineer",
     description:
       "Engenharia de Software & DevOps. Construindo infraestrutura escalável e sistemas resilientes.",
     type: "website",
