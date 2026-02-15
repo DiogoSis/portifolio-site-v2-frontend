@@ -1,11 +1,16 @@
+'use client';
+
 import Link from "next/link";
 import { ArrowRight, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HeroTerminal } from "@/components/home/hero-terminal";
 import { TechStackGrid } from "@/components/home/tech-stack-grid";
 import { CurrentFocusCard } from "@/components/home/current-focus-card";
+import { useChat } from "@/lib/hooks/use-chat";
 
 export default function Home() {
+  const { openChat } = useChat();
+
   return (
     <div className="pt-16">
       {/* Hero Section */}
@@ -46,15 +51,13 @@ export default function Home() {
                   </Link>
                 </Button>
                 <Button
-                  asChild
+                  onClick={openChat}
                   variant="outline"
                   size="lg"
                   className="border-text-700 text-text-300 hover:bg-background-800 hover:text-text-50"
                 >
-                  <Link href="#chat">
-                    <MessageSquare className="mr-2 w-4 h-4" />
-                    Chat com IA
-                  </Link>
+                  <MessageSquare className="mr-2 w-4 h-4" />
+                  Chat com IA
                 </Button>
               </div>
             </div>
