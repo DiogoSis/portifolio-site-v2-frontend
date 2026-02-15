@@ -15,10 +15,13 @@ export async function POST(req: NextRequest) {
     }
 
     // URL do Lambda (configurar via variável de ambiente)
-    const lambdaUrl = process.env.NEXT_PUBLIC_CHAT_API_URL;
+    const lambdaUrl = 
+      process.env.CHAT_API_URL || 
+      process.env.NEXT_PUBLIC_CHAT_API_URL ||
+      'https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat';
 
     if (!lambdaUrl) {
-      console.error('❌ NEXT_PUBLIC_CHAT_API_URL não configurada');
+      console.error('❌ CHAT_API_URL não configurada');
       return NextResponse.json(
         { error: 'Chat service not configured' },
         { status: 500 }
