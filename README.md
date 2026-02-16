@@ -279,47 +279,63 @@ O site é totalmente responsivo com breakpoints:
 
 ### Variáveis de Ambiente
 
-O projeto requer configuração de API Keys para autenticação com a API.
+A aplicação **requer** configuração de API Keys para funcionar.
 
-Crie um arquivo `.env.local` na raiz do projeto (use `.env.example` como referência):
+#### Desenvolvimento Local
+
+Crie um arquivo `.env.local` na raiz do `portfolio-web/`:
 
 ```bash
 # API Configuration
 NEXT_PUBLIC_API_BASE_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com
 
-# API Keys para autenticação
-# SITE KEY (Read-Only) - Para operações GET no frontend público
-NEXT_PUBLIC_API_SITE_KEY=your-site-key-here
+# API Keys para autenticação (obter via Terraform)
+NEXT_PUBLIC_API_SITE_KEY=sua-chave-aqui
 
-# ADMIN KEY (Full Access) - Para operações POST/PUT/DELETE
-# IMPORTANTE: Nunca expor no frontend (sem NEXT_PUBLIC_)
-API_ADMIN_KEY=your-admin-key-here
-
-# Chat API Configuration
+# Chat API Configuration  
 NEXT_PUBLIC_CHAT_API_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat
 ```
 
-#### Obtendo as API Keys
+#### Como Obter as API Keys
 
-As API Keys podem ser obtidas através do Terraform:
+Use o Terraform no projeto backend:
 
 ```bash
-# Site Key (Read-Only)
-terraform output -raw api_key_site
+# Navegue até o diretório do backend
+cd ../backend  
 
-# Admin Key (Full Access)
-terraform output -raw api_key_admin
+# Obtenha a Site Key (Read-Only)
+terraform output -raw api_key_site
 ```
 
 #### Segurança
 
-- **SITE KEY**: Permite apenas operações GET (usado no frontend público)
-- **ADMIN KEY**: Permite todas as operações (POST, PUT, DELETE) - Nunca expor no frontend
-- **Rate Limiting**: 
-  - Chat: 5 req/s (burst: 10)
-  - Outros: 50 req/s (burst: 100)
+- **SITE KEY**: Operações GET (leitura) - Usada no frontend
+- **ADMIN KEY**: NUNCA expor no frontend (apenas backend)
+- **Rate Limiting**: Proteção automática na API Gateway
 
-## 📄 Licença
+## � Deploy em Produção
+
+A aplicação **requer configuração de variáveis de ambiente** no AWS Amplify para funcionar em produção.
+
+**Sem as variáveis configuradas, você receberá erro 500/401!**
+
+Ver guia completo: **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+
+### Deploy no AWS Amplify
+
+**1. Configure as variáveis de ambiente no Amplify** (ver [DEPLOYMENT.md](./DEPLOYMENT.md))  
+**2. Faça push para o repositório:**
+
+```bash
+git add .
+git commit -m "deploy: versão para produção"
+git push origin main
+```
+
+**Guia completo com troubleshooting:** [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+## �📄 Licença
 
 Este projeto é privado e de propriedade de Diogo Luna.
 
