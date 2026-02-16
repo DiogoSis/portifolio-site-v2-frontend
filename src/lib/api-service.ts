@@ -4,20 +4,37 @@ const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || 
   "https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com";
 
+const API_SITE_KEY = process.env.NEXT_PUBLIC_API_SITE_KEY || "";
+
 class ApiService {
   private baseUrl: string;
+  private apiKey: string;
 
-  constructor(baseUrl: string = BASE_URL) {
+  constructor(baseUrl: string = BASE_URL, apiKey: string = API_SITE_KEY) {
     this.baseUrl = baseUrl;
+    this.apiKey = apiKey;
+    
+    // Debug: log para verificar se a API key está sendo carregada
+    if (typeof window !== 'undefined') {
+      console.log('🔑 API Key carregada:', this.apiKey ? '✅ Sim' : '❌ Não');
+      console.log('🌐 Base URL:', this.baseUrl);
+    }
   }
 
   private async fetchData<T>(endpoint: string): Promise<T> {
     try {
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+
+      // Adiciona x-api-key se disponível
+      if (this.apiKey) {
+        headers["x-api-key"] = this.apiKey;
+      }
+
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         // Adiciona cache control para Next.js
         next: { revalidate: 3600 }, // Revalida a cada 1 hora
       });

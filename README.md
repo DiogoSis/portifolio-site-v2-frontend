@@ -120,20 +120,38 @@ portfolio-web/
 
 ## 🔌 Integração com API
 
-O frontend consome uma API REST serverless hospedada na AWS:
+O frontend consome uma API REST serverless hospedada na AWS com autenticação via API Key:
 
 **Base URL:** `https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com`
 
+### Autenticação
+
+Todas as requisições devem incluir o header `x-api-key`:
+
+```typescript
+headers: {
+  'Content-Type': 'application/json',
+  'x-api-key': 'your-api-key-here'
+}
+```
+
 ### Endpoints
 
-| Endpoint | Método | Descrição |
-|----------|--------|-----------|
-| `/certificates` | GET | Lista todos os certificados |
-| `/certificates/{id}` | GET | Retorna um certificado específico |
-| `/formations` | GET | Lista todas as formações |
-| `/formations/{id}` | GET | Retorna uma formação específica |
-| `/projects` | GET | Lista todos os projetos |
-| `/projects/{id}` | GET | Retorna um projeto específico |
+| Endpoint | Método | Autenticação | Descrição |
+|----------|--------|--------------|-----------|
+| `/certificates` | GET | Site Key | Lista todos os certificados |
+| `/certificates/{id}` | GET | Site Key | Retorna um certificado específico |
+| `/certificates` | POST | Admin Key | Cria um novo certificado |
+| `/certificates/{id}` | PUT | Admin Key | Atualiza um certificado |
+| `/formations` | GET | Site Key | Lista todas as formações |
+| `/formations/{id}` | GET | Site Key | Retorna uma formação específica |
+| `/formations` | POST | Admin Key | Cria uma nova formação |
+| `/formations/{id}` | PUT | Admin Key | Atualiza uma formação |
+| `/projects` | GET | Site Key | Lista todos os projetos |
+| `/projects/{id}` | GET | Site Key | Retorna um projeto específico |
+| `/projects` | POST | Admin Key | Cria um novo projeto |
+| `/projects/{id}` | PUT | Admin Key | Atualiza um projeto |
+| `/chat` | POST | Site Key | Envia uma pergunta para o chatbot RAG |
 
 ### Tipos de Dados
 
@@ -261,7 +279,45 @@ O site é totalmente responsivo com breakpoints:
 
 ### Variáveis de Ambiente
 
-Não há variáveis de ambiente obrigatórias, pois a URL da API está configurada diretamente no código.
+O projeto requer configuração de API Keys para autenticação com a API.
+
+Crie um arquivo `.env.local` na raiz do projeto (use `.env.example` como referência):
+
+```bash
+# API Configuration
+NEXT_PUBLIC_API_BASE_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com
+
+# API Keys para autenticação
+# SITE KEY (Read-Only) - Para operações GET no frontend público
+NEXT_PUBLIC_API_SITE_KEY=your-site-key-here
+
+# ADMIN KEY (Full Access) - Para operações POST/PUT/DELETE
+# IMPORTANTE: Nunca expor no frontend (sem NEXT_PUBLIC_)
+API_ADMIN_KEY=your-admin-key-here
+
+# Chat API Configuration
+NEXT_PUBLIC_CHAT_API_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat
+```
+
+#### Obtendo as API Keys
+
+As API Keys podem ser obtidas através do Terraform:
+
+```bash
+# Site Key (Read-Only)
+terraform output -raw api_key_site
+
+# Admin Key (Full Access)
+terraform output -raw api_key_admin
+```
+
+#### Segurança
+
+- **SITE KEY**: Permite apenas operações GET (usado no frontend público)
+- **ADMIN KEY**: Permite todas as operações (POST, PUT, DELETE) - Nunca expor no frontend
+- **Rate Limiting**: 
+  - Chat: 5 req/s (burst: 10)
+  - Outros: 50 req/s (burst: 100)
 
 ## 📄 Licença
 

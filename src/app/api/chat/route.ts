@@ -20,6 +20,9 @@ export async function POST(req: NextRequest) {
       process.env.NEXT_PUBLIC_CHAT_API_URL ||
       'https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat';
 
+    // API Key para autenticação
+    const apiKey = process.env.NEXT_PUBLIC_API_SITE_KEY || '';
+
     if (!lambdaUrl) {
       console.error('❌ CHAT_API_URL não configurada');
       return NextResponse.json(
@@ -28,12 +31,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Headers com autenticação
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+
+    // Adiciona x-api-key se disponível
+    if (apiKey) {
+      headers['x-api-key'] = apiKey;
+    }
+
     // Chama o Lambda
     const response = await fetch(lambdaUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         question,
         conversationId,
