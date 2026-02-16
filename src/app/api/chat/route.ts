@@ -20,16 +20,15 @@ export async function POST(req: NextRequest) {
       process.env.NEXT_PUBLIC_CHAT_API_URL ||
       'https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat';
 
-    // API Key para autenticação
-    const apiKey = process.env.NEXT_PUBLIC_API_SITE_KEY || '';
+    const apiKey = process.env.API_ADMIN_KEY || process.env.NEXT_PUBLIC_API_SITE_KEY || '';
 
     // Validação: API Key obrigatória
     if (!apiKey) {
-      console.error('❌ [Chat] NEXT_PUBLIC_API_SITE_KEY não configurada!');
+      console.error('❌ [Chat] API_ADMIN_KEY não configurada!');
       return NextResponse.json(
         { 
           error: 'API Key not configured',
-          message: 'NEXT_PUBLIC_API_SITE_KEY environment variable is required. Check DEPLOYMENT.md for instructions.'
+          message: 'API_ADMIN_KEY environment variable is required. Check DEPLOYMENT.md for instructions.'
         },
         { status: 500 }
       );

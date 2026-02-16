@@ -40,18 +40,29 @@ Você receberá erro 500/401 se as variáveis não estiverem configuradas.
 
 Clique em **"Add variable"** ou **"Add"** e adicione:
 
-| Nome da Variável | Valor |
-|------------------|-------|
-| `NEXT_PUBLIC_API_SITE_KEY` | `[OBTENHA VIA TERRAFORM - ver abaixo]` |
-| `NEXT_PUBLIC_API_BASE_URL` | `https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com` |
-| `NEXT_PUBLIC_CHAT_API_URL` | `https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat` |
+| Nome da Variável | Valor | Descrição |
+|------------------|-------|-----------|
+| `NEXT_PUBLIC_API_SITE_KEY` | `[OBTENHA VIA TERRAFORM]` | Chave Read-Only (GET requests) |
+| `API_ADMIN_KEY` | `[OBTENHA VIA TERRAFORM]` | Chave Full Access (usado pelo chat) |
+| `NEXT_PUBLIC_API_BASE_URL` | `https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com` | Base URL da API |
+| `NEXT_PUBLIC_CHAT_API_URL` | `https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat` | Chat endpoint |
 
-**Obtenha a API Key via Terraform:**
+**⚠️ Importante:**
+- `NEXT_PUBLIC_*` são expostas no browser (só para leitura)
+- `API_ADMIN_KEY` **NÃO** tem prefixo `NEXT_PUBLIC_` (só acessível server-side)
+- O chat requer Admin Key pois o backend exige permissões elevadas
+
+**Obtenha as API Keys via Terraform:**
 
 ```bash
 # No diretório do backend
 cd ../backend  # ou onde está o Terraform
+
+# Site Key (Read-Only)
 terraform output -raw api_key_site
+
+# Admin Key (Full Access)
+terraform output -raw api_key_admin
 ```
 
 #### Passo 4: Salvar e Redeploy
@@ -69,12 +80,13 @@ Se você tem AWS CLI configurado:
 # Liste suas apps
 aws amplify list-apps
 
-# Configure a variável (substitua APP_ID e BRANCH_NAME)
+# Configure as variáveis (substitua APP_ID e BRANCH_NAME)
 aws amplify update-branch \
   --app-id APP_ID \
   --branch-name main \
   --environment-variables \
-    NEXT_PUBLIC_API_SITE_KEY=sua-chave-aqui \
+    NEXT_PUBLIC_API_SITE_KEY=sua-site-key-aqui \
+    API_ADMIN_KEY=sua-admin-key-aqui \
     NEXT_PUBLIC_API_BASE_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com \
     NEXT_PUBLIC_CHAT_API_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat
 ```
