@@ -1,0 +1,368 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-02-17T00:00:00Z",
+    "locale": "pt-BR"
+  },
+  "personalInfo": {
+    "fullName": "Diogo de Assis Luna da Silva",
+    "title": "Desenvolvedor Pleno & Software Engineer",
+    "email": "diogosis777@gmail.com",
+    "phone": "+55 (21) 97066-9909",
+    "location": {
+      "street": "Rua Santo André LT20 QD20, Nova Iguaçu",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "zipCode": "26298-662",
+      "country": "Brasil"
+    },
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/diogosis/",
+      "github": "https://github.com/DiogoSis",
+      "portfolio": "https://www.diogo.life/"
+    }
+  },
+  "summary": {
+    "text": "Desenvolvedor Pleno e Software Engineer com 3+ anos de experiência em desenvolvimento full-stack e arquitetura de software. Especializado em construir soluções escaláveis e resilientes usando Node.js, React e AWS. Atualmente liderando migração de sistemas legacy para arquitetura Cloud, com foco em alta disponibilidade, performance e redução de custos operacionais.",
+    "keywords": [
+      "Tech Lead",
+      "Software Engineer",
+      "Node.js",
+      "React",
+      "AWS",
+      "DevOps",
+      "Cloud Native",
+      "Serverless",
+      "Docker",
+      "CI/CD"
+    ]
+  },
+  "experience": [
+    {
+      "id": "exp-1",
+      "company": "Segmedic",
+      "position": "Desenvolvedor Pleno & Tech Lead",
+      "location": "Rio de Janeiro, RJ",
+      "startDate": "2024-01",
+      "endDate": "present",
+      "current": true,
+      "responsibilities": [
+        "Liderança técnica de equipe de 3 desenvolvedores, conduzindo code reviews, definição de arquitetura e mentoria",
+        "Arquitetura e implementação de migração de serviços monolíticos para microserviços serverless na AWS (Lambda, API Gateway, S3, DynamoDB)",
+        "Implementação de pipeline CI/CD completo com GitHub Actions, testes automatizados e deploy em múltiplos ambientes",
+        "Definição de padrões de código, boas práticas e documentação técnica da infraestrutura",
+        "Gestão de projetos ágeis utilizando Scrum, planejamento de sprints e acompanhamento de métricas de performance"
+      ],
+      "achievements": [
+        "Redução de 40% nos custos de infraestrutura através de otimização de recursos serverless",
+        "Melhoria de 60% no tempo de deploy com automação de CI/CD",
+        "Implementação de monitoramento com CloudWatch resultando em 99.9% de uptime"
+      ],
+      "technologies": [
+        "Node.js",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "SQL",
+        "AWS Lambda",
+        "AWS API Gateway",
+        "DynamoDB",
+        "S3",
+        "Docker",
+        "GitHub Actions",
+        "Terraform"
+      ]
+    },
+    {
+      "id": "exp-2",
+      "company": "Segmedic",
+      "position": "Fullstack Developer Junior",
+      "location": "Rio de Janeiro, RJ",
+      "startDate": "2023-01",
+      "endDate": "2023-12",
+      "current": false,
+      "responsibilities": [
+        "Desenvolvimento de aplicações web full-stack utilizando React, Node.js e PostgreSQL",
+        "Integração de sistemas legados com novas APIs RESTful e serviços de terceiros",
+        "Automação de processos internos através de scripts Python e ferramentas de DevOps",
+        "Manutenção e otimização de banco de dados relacional, criação de índices e queries eficientes",
+        "Participação ativa em cerimônias ágeis e colaboração com equipes de produto e design"
+      ],
+      "achievements": [
+        "Desenvolvimento de sistema de agendamento que reduziu em 30% o tempo de marcação de consultas",
+        "Desenvolvimento e acompanhamento no sistema de totem de autoatendimento para clínicas, aumentando a eficiência do atendimento em 25%",
+        "Automação de oportunidades de lead para CRM economizando 20 horas semanais de trabalho manual",
+        "Manutenção e acompanhamento de plataforma de recorencia"
+      ],
+      "technologies": [
+        "React",
+        "Node.js",
+        "Express",
+        "Java",
+        "PostgreSQL",
+        "Python",
+        "Docker",
+        "Git",
+        "Linux"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu-1",
+      "institution": "Universidade Estácio de Sá",
+      "degree": "Bacharelado",
+      "field": "Sistemas de Informação",
+      "startDate": "2023-01",
+      "endDate": "expected 2027",
+      "location": "Rio de Janeiro, RJ",
+      "highlights": [
+        "Foco em engenharia de software, arquitetura de sistemas e computação em nuvem",
+        "Participação em projetos acadêmicos de desenvolvimento de software com metodologias ágeis"
+      ]
+    }
+  ],
+  "skills": {
+    "technical": [
+      {
+        "category": "Linguagens de Programação",
+        "items": [
+          "JavaScript",
+          "TypeScript",
+          "Python",
+          "SQL",
+          "Java",
+          "Ruby"
+        ]
+      },
+      {
+        "category": "Frontend",
+        "items": [
+          "React",
+          "Next.js",
+          "HTML5",
+          "CSS3",
+          "Tailwind CSS",
+          "Framer Motion"
+        ]
+      },
+      {
+        "category": "Backend",
+        "items": [
+          "Node.js",
+          "Express",
+          "FastAPI",
+          "REST APIs",
+          "Ruby on Rails",
+          "PostgreSQL",
+          "DynamoDB",
+          "Redis"
+        ]
+      },
+      {
+        "category": "Cloud & DevOps",
+        "items": [
+          "AWS (Lambda, S3, API Gateway, CloudWatch, DynamoDB, EC2, etc...)",
+          "Docker",
+          "Terraform",
+          "CI/CD (GitHub Actions)",
+          "Linux (Fedora, Debian)",
+          "Nginx",
+          "Git"
+        ]
+      },
+      {
+        "category": "Ferramentas & Metodologias",
+        "items": [
+          "Scrum",
+          "Kanban",
+          "Clean Architecture",
+          "Microservices",
+          "Serverless",
+          "Code Review",
+          "VS Code"
+        ]
+      }
+    ],
+    "languages": [
+      {
+        "language": "Português",
+        "proficiency": "Native"
+      },
+      {
+        "language": "Inglês",
+        "proficiency": "Advanced"
+      }
+    ],
+    "soft": [
+      "Comunicação assertiva",
+      "Trabalho em equipe",
+      "Adaptabilidade",
+      "Organização",
+      "Pensamento crítico",
+      "Resolução de problemas"
+    ]
+  },
+  "achievements": [
+    "Desenvolvi páginas web otimizadas para captação de novos leads, aumentando significativamente a conversão",
+    "Modifiquei automações existentes para agilizar o trabalho dos operadores de CRM, economizando 20 horas semanais",
+    "Aperfeiçoei o sistema de agendamento de consultas e exames, reduzindo em 40% a quantidade de cliques para melhorar a experiência do usuário",
+    "Automatizei o sistema de rotas, agilizando o processo dos operadores e otimização de recursos de transporte",
+    "Desenvolvi sistema de validação para parceiros identificarem clientes da rede de forma eficiente",
+    "Criei documentação técnica de código para facilitar o entendimento e onboarding da equipe",
+    "Implementação de sistema de totem de autoatendimento para clínicas, aumentando a eficiência do atendimento em 25%",
+    "Redução de 40% nos custos de infraestrutura através de otimização de recursos serverless",
+    "Melhoria de 60% no tempo de deploy com automação de CI/CD",
+    "Implementação de monitoramento com CloudWatch resultando em 99.9% de uptime"
+  ],
+  "additionalKnowledge": [
+    "RD Station - Plataforma de automação de marketing e CRM",
+    "Feegow - Sistema de gestão para clínicas e consultórios",
+    "Tom Ticket - Sistema de gestão de chamados e suporte",
+    "MailJet - Serviço de envio de e-mails transacionais",
+    "Escallo - Plataforma de gestão de escalas médicas",
+    "Vuupt - Sistema de gestão de transporte e logística",
+    "Integração de APIs REST e webhooks",
+    "Experiência com sistemas legados e migração de dados"
+  ],
+  "certifications": {
+    "source": "static",
+    "items": [
+      {
+        "id": "cert-1",
+        "name": "REST e Níveis de Maturidade na prática",
+        "issuer": "Full Cycle",
+        "date": "2026-02",
+        "category": "Backend",
+        "credentialUrl": "https://fullcycle.com.br/certificado/6bad842e-a8c6-4580-b029-7b523a9a5375/"
+      },
+      {
+        "id": "cert-2",
+        "name": "Programação para a Internet",
+        "issuer": "Estácio",
+        "date": "2025-10",
+        "category": "Dev"
+      },
+      {
+        "id": "cert-3",
+        "name": "Gerência de Projetos em TI",
+        "issuer": "Estácio",
+        "date": "2025-10",
+        "category": "Dev"
+      },
+      {
+        "id": "cert-4",
+        "name": "Desenvolvimento de Soluções de Big Data Analytics",
+        "issuer": "Estácio",
+        "date": "2025-04",
+        "category": "Data",
+        "credentialId": "baf38143c13ccdb01e9dcb5"
+      },
+      {
+        "id": "cert-5",
+        "name": "Programação para Dispositivos Móveis",
+        "issuer": "Estácio",
+        "date": "2025-04",
+        "category": "Mobile",
+        "credentialId": "5d83ce591d860491e709cda"
+      },
+      {
+        "id": "cert-6",
+        "name": "Preparatório para Arquitetura de Soluções em Nuvem - AWS",
+        "issuer": "Proz",
+        "date": "2024-11",
+        "category": "Cloud",
+        "credentialId": "9151b327-26bc-4504-aa4b-215e16e56629",
+        "skills": ["Arquitetura de soluções", "AWS", "Computação em nuvem"]
+      },
+      {
+        "id": "cert-7",
+        "name": "Formação Docker Fundamentals",
+        "issuer": "DIO",
+        "date": "2025-01",
+        "category": "DevOps",
+        "credentialId": "EUCAWJJU",
+        "skills": ["Swarm da Docker", "Docker"]
+      },
+      {
+        "id": "cert-8",
+        "name": "Redes e Linux Essentials para AWS",
+        "issuer": "Proz",
+        "date": "2024-12",
+        "category": "Cloud",
+        "credentialId": "4690079665a106f2c834fa4bcd67941072a313eb",
+        "skills": ["Servidor Linux", "AWS", "Linux", "Amazon EC2"]
+      },
+      {
+        "id": "cert-9",
+        "name": "Terraform - Do Básico ao Avançado",
+        "issuer": "Udemy",
+        "date": "2024-11",
+        "category": "DevOps",
+        "credentialId": "UC-dda8d162-4229-4ec3-873f-f9b774766f4f",
+        "skills": ["Terraform"]
+      },
+      {
+        "id": "cert-10",
+        "name": "Programação de Algoritmos Escaláveis",
+        "issuer": "Estácio",
+        "date": "2024-10",
+        "category": "Backend",
+        "credentialId": "2699706a4340828f5bd4898",
+        "skills": ["Programação", "Git", "Liderança em projetos de TI", "AWS"]
+      },
+      {
+        "id": "cert-11",
+        "name": "React: desenvolvendo com JavaScript",
+        "issuer": "Alura",
+        "date": "2023-03",
+        "category": "Frontend",
+        "credentialId": "50adfedc-c987-487f-858e-fc1e4a322ba4",
+        "skills": ["JavaScript", "TypeScript", "HTML5"]
+      },
+      {
+        "id": "cert-12",
+        "name": "Formação JavaScript para Front-end",
+        "issuer": "Alura",
+        "date": "2023-01",
+        "category": "Frontend",
+        "credentialId": "6d77cce1-f64e-4b93-9ced-0f82e367517b",
+        "skills": ["JavaScript", "Git"]
+      },
+      {
+        "id": "cert-13",
+        "name": "Git e Github: controle e compartilhe seu código",
+        "issuer": "Alura",
+        "date": "2022-12",
+        "category": "Tools",
+        "credentialId": "07d0ff08-f146-478a-9ea5-1df2376779de"
+      },
+      {
+        "id": "cert-14",
+        "name": "Formação Front-end",
+        "issuer": "Alura",
+        "date": "2022-12",
+        "category": "Frontend",
+        "credentialId": "0343f990-fe23-4db6-a480-fa544f2258f5",
+        "skills": ["JavaScript", "Git", "HTML5"]
+      }
+    ]
+  },
+  "preferences": {
+    "sectionsOrder": [
+      "summary",
+      "experience",
+      "education",
+      "certifications",
+      "achievements",
+      "skills",
+      "additionalKnowledge",
+      "softSkills"
+    ],
+    "includeProjects": false,
+    "includeCertifications": true,
+    "maxProjectsCount": 0,
+    "maxCertificationsCount": 14,
+    "theme": "professional"
+  }
+}

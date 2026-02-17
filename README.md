@@ -344,7 +344,7 @@ Este projeto é privado e de propriedade de Diogo Luna.
 **Diogo Luna**  
 Tech Lead & Software Engineer
 
-- Portfolio: [Em breve]
+- Portfolio: [@amplify](https://www.diogo.life/)
 - LinkedIn: [@diogosis](https://www.linkedin.com/in/diogosis)
 - GitHub: [@DiogoSis](https://github.com/DiogoSis)
 

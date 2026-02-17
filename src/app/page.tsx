@@ -51,6 +51,17 @@ export default function Home() {
                   </Link>
                 </Button>
                 <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="border-text-700 text-text-300 hover:bg-background-800 hover:text-text-50"
+                >
+                  <Link href="/cv">
+                    Dowload CV
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button
                   onClick={openChat}
                   variant="outline"
                   size="lg"
