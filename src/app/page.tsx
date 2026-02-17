@@ -57,7 +57,7 @@ export default function Home() {
                   className="border-text-700 text-text-300 hover:bg-background-800 hover:text-text-50"
                 >
                   <Link href="/cv">
-                    Dowload CV
+                    Download CV
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
