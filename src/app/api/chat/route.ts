@@ -22,6 +22,15 @@ export async function POST(req: NextRequest) {
 
     const apiKey = process.env.API_ADMIN_KEY || process.env.NEXT_PUBLIC_API_SITE_KEY || '';
 
+    console.log('🔍 [Chat] Debug Environment:', {
+      hasAdminKey: !!process.env.API_ADMIN_KEY,
+      hasSiteKey: !!process.env.NEXT_PUBLIC_API_SITE_KEY,
+      apiKeyLength: apiKey.length,
+      apiKeyPrefix: apiKey.substring(0, 4) + '***',
+      lambdaUrl,
+      nodeEnv: process.env.NODE_ENV,
+    });
+
     // Validação: API Key obrigatória
     if (!apiKey) {
       console.error('❌ [Chat] API_ADMIN_KEY não configurada!');
@@ -45,6 +54,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Chama o Lambda
+    console.log('📤 [Chat] Enviando requisição para Lambda:', {
+      url: lambdaUrl,
+      hasApiKey: !!headers['x-api-key'],
+      question: question.substring(0, 50) + '...',
+    });
+
     const response = await fetch(lambdaUrl, {
       method: 'POST',
       headers,
@@ -56,14 +71,28 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ Erro no Lambda:', errorText);
+      console.error('❌ Erro no Lambda:', {
+        status: response.status,
+        statusText: response.statusText,
+        errorBody: errorText,
+        headers: Object.fromEntries(response.headers.entries()),
+      });
       return NextResponse.json(
-        { error: 'Failed to get response from chat service' },
+        { 
+          error: 'Failed to get response from chat service',
+          details: `Status ${response.status}: ${errorText}`,
+          debug: {
+            status: response.status,
+            hasApiKey: !!headers['x-api-key'],
+          }
+        },
         { status: response.status }
       );
     }
 
     const data = await response.json();
+
+    console.log('✅ [Chat] Resposta do Lambda recebida com sucesso');
 
     return NextResponse.json(data);
   } catch (error) {
