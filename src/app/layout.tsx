@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/shared/navbar";
-import { Footer } from "@/components/shared/footer";
-import { ChatBubble } from "@/components/chat/chat-bubble";
+import { AppShell } from "@/components/shared/app-shell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -58,10 +56,7 @@ export default function RootLayout({
         className={`${inter.variable} ${notoSans.variable} ${jetbrainsMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <ChatBubble />
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

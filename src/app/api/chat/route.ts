@@ -14,55 +14,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Question is required' }, { status: 400 });
     }
 
-    // URL do Lambda
-    const lambdaUrl = 
-      process.env.CHAT_API_URL || 
-      process.env.NEXT_PUBLIC_CHAT_API_URL ||
-      'https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat';
+    // URL do Lambda (configurar via variável de ambiente)
+    const lambdaUrl = process.env.NEXT_PUBLIC_CHAT_API_URL;
 
-    const apiKey = process.env.API_ADMIN_KEY || process.env.NEXT_PUBLIC_API_SITE_KEY || '';
-
-    console.log('🔍 [Chat] Debug Environment:', {
-      hasAdminKey: !!process.env.API_ADMIN_KEY,
-      hasSiteKey: !!process.env.NEXT_PUBLIC_API_SITE_KEY,
-      apiKeyLength: apiKey.length,
-      apiKeyPrefix: apiKey.substring(0, 4) + '***',
-      lambdaUrl,
-      nodeEnv: process.env.NODE_ENV,
-    });
-
-    // Validação: API Key obrigatória
-    if (!apiKey) {
-      console.error('❌ [Chat] API_ADMIN_KEY não configurada!');
+    if (!lambdaUrl) {
+      console.error('❌ NEXT_PUBLIC_CHAT_API_URL não configurada');
       return NextResponse.json(
-        { 
-          error: 'API Key not configured',
-          message: 'API_ADMIN_KEY environment variable is required. Check DEPLOYMENT.md for instructions.'
-        },
+        { error: 'Chat service not configured' },
         { status: 500 }
       );
     }
 
-    // Headers com autenticação
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
-
-    // Adiciona x-api-key se disponível
-    if (apiKey) {
-      headers['x-api-key'] = apiKey;
-    }
-
     // Chama o Lambda
-    console.log('📤 [Chat] Enviando requisição para Lambda:', {
-      url: lambdaUrl,
-      hasApiKey: !!headers['x-api-key'],
-      question: question.substring(0, 50) + '...',
-    });
-
     const response = await fetch(lambdaUrl, {
       method: 'POST',
-      headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         question,
         conversationId,
@@ -71,28 +39,14 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ Erro no Lambda:', {
-        status: response.status,
-        statusText: response.statusText,
-        errorBody: errorText,
-        headers: Object.fromEntries(response.headers.entries()),
-      });
+      console.error('❌ Erro no Lambda:', errorText);
       return NextResponse.json(
-        { 
-          error: 'Failed to get response from chat service',
-          details: `Status ${response.status}: ${errorText}`,
-          debug: {
-            status: response.status,
-            hasApiKey: !!headers['x-api-key'],
-          }
-        },
+        { error: 'Failed to get response from chat service' },
         { status: response.status }
       );
     }
 
     const data = await response.json();
-
-    console.log('✅ [Chat] Resposta do Lambda recebida com sucesso');
 
     return NextResponse.json(data);
   } catch (error) {

@@ -26,6 +26,7 @@ const navLinks = [
   { href: "/certificacoes", label: "Certificações" },
   { href: "/setup", label: "Setup" },
   { href: "/status", label: "Status" },
+  { href: "/admin/login", label: "Admin" },
 ];
 
 export function Footer() {

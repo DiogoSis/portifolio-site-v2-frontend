@@ -1,16 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare } from 'lucide-react';
 import { ChatInterface } from './chat-interface';
-import { useChat } from '@/lib/hooks/use-chat';
 
 /**
  * Botão flutuante para abrir o chat
  * Posição fixa no canto inferior direito
  */
 export function ChatBubble() {
-  const { isOpen, toggleChat, closeChat } = useChat();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -21,7 +21,7 @@ export function ChatBubble() {
         transition={{ delay: 1, duration: 0.3 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        onClick={toggleChat}
+        onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-accent-500 hover:bg-accent-400 text-background-900 rounded-full shadow-2xl flex items-center justify-center transition-colors z-50"
         aria-label="Abrir chat"
       >
@@ -60,7 +60,7 @@ export function ChatBubble() {
       </motion.button>
 
       {/* Interface do Chat */}
-      <ChatInterface isOpen={isOpen} onClose={closeChat} />
+      <ChatInterface isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }
