@@ -20,7 +20,7 @@ export async function GET(
 
     const { baseUrl } = getAdminApiConfig();
 
-    const response = await fetch(`${baseUrl}/${resource}`, {
+    const response = await fetch(`${baseUrl}/admin/${resource}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export async function POST(
     const body = await request.json();
     const { baseUrl } = getAdminApiConfig();
 
-    const response = await fetch(`${baseUrl}/${resource}`, {
+    const response = await fetch(`${baseUrl}/admin/${resource}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

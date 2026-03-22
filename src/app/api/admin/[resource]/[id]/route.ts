@@ -21,7 +21,7 @@ export async function PUT(
     const body = await request.json();
     const { baseUrl } = getAdminApiConfig();
 
-    const response = await fetch(`${baseUrl}/${resource}/${id}`, {
+    const response = await fetch(`${baseUrl}/admin/${resource}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export async function DELETE(
 
     const { baseUrl } = getAdminApiConfig();
 
-    const response = await fetch(`${baseUrl}/${resource}/${id}`, {
+    const response = await fetch(`${baseUrl}/admin/${resource}/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
