@@ -291,6 +291,7 @@ NEXT_PUBLIC_API_BASE_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com
 
 # API Keys para autenticação (obter via Terraform)
 NEXT_PUBLIC_API_SITE_KEY=sua-chave-aqui
+API_SITE_KEY=sua-chave-aqui
 
 # Chat API Configuration  
 NEXT_PUBLIC_CHAT_API_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat
@@ -298,10 +299,6 @@ NEXT_PUBLIC_CHAT_API_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/
 # Admin auth via Cognito
 COGNITO_REGION=us-east-1
 COGNITO_USER_POOL_CLIENT_ID=seu-client-id-aqui
-
-# Fallback para ambientes que expoem apenas NEXT_PUBLIC_
-NEXT_PUBLIC_COGNITO_REGION=us-east-1
-NEXT_PUBLIC_COGNITO_USER_POOL_CLIENT_ID=seu-client-id-aqui
 
 # Sessao admin (cookie httpOnly assinado)
 ADMIN_SESSION_SECRET=change-me-in-local
@@ -338,6 +335,24 @@ terraform output -raw api_key_site
 - **SITE KEY**: Operações GET (leitura) - Usada no frontend
 - **ADMIN KEY**: NUNCA expor no frontend (apenas backend)
 - **Rate Limiting**: Proteção automática na API Gateway
+
+### Smoke Test BFF (Producao)
+
+Para validar os endpoints BFF do Next em producao (`/api/*`) em uma unica execucao:
+
+```bash
+BFF_BASE_URL=https://www.diogo.life \
+BFF_ADMIN_USERNAME=seu-admin@email.com \
+BFF_ADMIN_PASSWORD='sua-senha' \
+npm run test:bff:prod
+```
+
+O teste cobre:
+- `GET /api/certificates`
+- `GET /api/formations`
+- `GET /api/projects`
+- `POST /api/chat`
+- `POST /api/admin/auth/login` + `GET /api/admin/projects`
 
 ## � Deploy em Produção
 

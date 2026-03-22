@@ -14,13 +14,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Question is required' }, { status: 400 });
     }
 
-    // URL do Lambda (configurar via variável de ambiente)
-    const lambdaUrl = process.env.NEXT_PUBLIC_CHAT_API_URL;
+    // URL do backend chat (configurar via variavel de ambiente)
+    const lambdaUrl =
+      process.env.CHAT_API_URL ||
+      process.env.NEXT_PUBLIC_CHAT_API_URL;
+    const apiSiteKey =
+      process.env.API_SITE_KEY ||
+      process.env.NEXT_PUBLIC_API_SITE_KEY;
 
     if (!lambdaUrl) {
-      console.error('❌ NEXT_PUBLIC_CHAT_API_URL não configurada');
+      console.error('❌ CHAT_API_URL não configurada');
       return NextResponse.json(
         { error: 'Chat service not configured' },
+        { status: 500 }
+      );
+    }
+
+    if (!apiSiteKey) {
+      console.error('❌ API_SITE_KEY não configurada');
+      return NextResponse.json(
+        { error: 'Chat API key not configured' },
         { status: 500 }
       );
     }
@@ -30,6 +43,7 @@ export async function POST(req: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': apiSiteKey,
       },
       body: JSON.stringify({
         question,

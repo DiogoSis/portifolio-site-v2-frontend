@@ -24,14 +24,8 @@ interface CognitoErrorPayload {
 }
 
 function getCognitoConfig() {
-  const region =
-    process.env.COGNITO_REGION ||
-    process.env.NEXT_PUBLIC_COGNITO_REGION ||
-    "us-east-1";
-  const clientId =
-    process.env.COGNITO_USER_POOL_CLIENT_ID ||
-    process.env.NEXT_PUBLIC_COGNITO_USER_POOL_CLIENT_ID ||
-    "";
+  const region = process.env.COGNITO_REGION || "us-east-1";
+  const clientId = process.env.COGNITO_USER_POOL_CLIENT_ID || "";
 
   return { region, clientId };
 }
@@ -114,7 +108,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "Cognito nao configurado no frontend (defina COGNITO_USER_POOL_CLIENT_ID ou NEXT_PUBLIC_COGNITO_USER_POOL_CLIENT_ID e reinicie o servidor)",
+            "Cognito nao configurado no frontend (defina COGNITO_USER_POOL_CLIENT_ID no ambiente do servidor e reinicie o deploy)",
         },
         { status: 500 }
       );
