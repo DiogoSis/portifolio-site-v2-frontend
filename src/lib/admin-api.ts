@@ -11,7 +11,9 @@ export function isAllowedResource(resource: string): resource is AdminResource {
   return ALLOWED_RESOURCES.includes(resource as AdminResource);
 }
 
-export async function requireAdminSession(): Promise<void> {
+const ALLOWED_GROUPS = new Set(["superadmin", "editor"]);
+
+export async function requireAdminSession() {
   const cookieStore = await cookies();
   const token = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
   const session = verifyAdminSessionToken(token);
@@ -19,11 +21,18 @@ export async function requireAdminSession(): Promise<void> {
   if (!session) {
     throw new Error("UNAUTHORIZED");
   }
+
+  const hasAllowedGroup = session.groups.some((group) => ALLOWED_GROUPS.has(group));
+
+  if (!hasAllowedGroup) {
+    throw new Error("FORBIDDEN");
+  }
+
+  return session;
 }
 
 export function getAdminApiConfig() {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
-  const adminKey = process.env.API_ADMIN_KEY || "";
 
-  return { baseUrl, adminKey };
+  return { baseUrl };
 }

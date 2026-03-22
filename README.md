@@ -295,25 +295,25 @@ NEXT_PUBLIC_API_SITE_KEY=sua-chave-aqui
 # Chat API Configuration  
 NEXT_PUBLIC_CHAT_API_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/chat
 
-# Admin local-first mock auth
-ADMIN_MOCK_USERNAME=admin@local.dev
-ADMIN_MOCK_PASSWORD=admin123
+# Admin auth via Cognito
+COGNITO_REGION=us-east-1
+COGNITO_USER_POOL_CLIENT_ID=seu-client-id-aqui
+
+# Sessao admin (cookie httpOnly assinado)
 ADMIN_SESSION_SECRET=change-me-in-local
 ```
 
 Tambem existe um template em `.env.example` para acelerar a configuracao local.
 
-### Area Admin (Local-First)
+### Area Admin (Cognito)
 
-A area administrativa foi iniciada para testes locais sem Cognito real. Isso permite validar UX, guardas e sessao antes do provisionamento AWS.
+A area administrativa usa Cognito para autenticar usuarios e grupos (`superadmin` e `editor`).
 
 1. Inicie o frontend com `npm run dev`
 2. Acesse `http://localhost:3000/admin/login`
-3. Use as credenciais de `.env.local` (`ADMIN_MOCK_USERNAME` e `ADMIN_MOCK_PASSWORD`)
+3. Use um usuario existente no User Pool com grupo admin (`superadmin` ou `editor`)
 4. Apos login, voce sera redirecionado para `http://localhost:3000/admin`
 5. Use o botao `Sair` para limpar a sessao local
-
-Observacao: este fluxo e apenas para desenvolvimento local. A autenticacao Cognito sera conectada na fase de integracao AWS de desenvolvimento.
 
 #### Como Obter as API Keys
 

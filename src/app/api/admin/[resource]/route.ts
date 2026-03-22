@@ -10,7 +10,7 @@ export async function GET(
   context: { params: Promise<{ resource: string }> }
 ) {
   try {
-    await requireAdminSession();
+    const session = await requireAdminSession();
 
     const { resource } = await context.params;
 
@@ -18,16 +18,13 @@ export async function GET(
       return NextResponse.json({ error: "Resource not found" }, { status: 404 });
     }
 
-    const { baseUrl, adminKey } = getAdminApiConfig();
-    if (!adminKey) {
-      return NextResponse.json({ error: "API_ADMIN_KEY not configured" }, { status: 500 });
-    }
+    const { baseUrl } = getAdminApiConfig();
 
     const response = await fetch(`${baseUrl}/${resource}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": adminKey,
+        Authorization: `Bearer ${session.idToken}`,
       },
       cache: "no-store",
     });
@@ -39,6 +36,10 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    if (error instanceof Error && error.message === "FORBIDDEN") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
@@ -48,7 +49,7 @@ export async function POST(
   context: { params: Promise<{ resource: string }> }
 ) {
   try {
-    await requireAdminSession();
+    const session = await requireAdminSession();
 
     const { resource } = await context.params;
 
@@ -57,17 +58,13 @@ export async function POST(
     }
 
     const body = await request.json();
-    const { baseUrl, adminKey } = getAdminApiConfig();
-
-    if (!adminKey) {
-      return NextResponse.json({ error: "API_ADMIN_KEY not configured" }, { status: 500 });
-    }
+    const { baseUrl } = getAdminApiConfig();
 
     const response = await fetch(`${baseUrl}/${resource}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": adminKey,
+        Authorization: `Bearer ${session.idToken}`,
       },
       body: JSON.stringify(body),
     });
@@ -77,6 +74,10 @@ export async function POST(
   } catch (error) {
     if (error instanceof Error && error.message === "UNAUTHORIZED") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    if (error instanceof Error && error.message === "FORBIDDEN") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

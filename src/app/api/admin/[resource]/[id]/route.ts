@@ -10,7 +10,7 @@ export async function PUT(
   context: { params: Promise<{ resource: string; id: string }> }
 ) {
   try {
-    await requireAdminSession();
+    const session = await requireAdminSession();
 
     const { resource, id } = await context.params;
 
@@ -19,17 +19,13 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { baseUrl, adminKey } = getAdminApiConfig();
-
-    if (!adminKey) {
-      return NextResponse.json({ error: "API_ADMIN_KEY not configured" }, { status: 500 });
-    }
+    const { baseUrl } = getAdminApiConfig();
 
     const response = await fetch(`${baseUrl}/${resource}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": adminKey,
+        Authorization: `Bearer ${session.idToken}`,
       },
       body: JSON.stringify(body),
     });
@@ -41,6 +37,10 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    if (error instanceof Error && error.message === "FORBIDDEN") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
@@ -50,7 +50,7 @@ export async function DELETE(
   context: { params: Promise<{ resource: string; id: string }> }
 ) {
   try {
-    await requireAdminSession();
+    const session = await requireAdminSession();
 
     const { resource, id } = await context.params;
 
@@ -58,17 +58,13 @@ export async function DELETE(
       return NextResponse.json({ error: "Resource not found" }, { status: 404 });
     }
 
-    const { baseUrl, adminKey } = getAdminApiConfig();
-
-    if (!adminKey) {
-      return NextResponse.json({ error: "API_ADMIN_KEY not configured" }, { status: 500 });
-    }
+    const { baseUrl } = getAdminApiConfig();
 
     const response = await fetch(`${baseUrl}/${resource}/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": adminKey,
+        Authorization: `Bearer ${session.idToken}`,
       },
     });
 
@@ -77,6 +73,10 @@ export async function DELETE(
   } catch (error) {
     if (error instanceof Error && error.message === "UNAUTHORIZED") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    if (error instanceof Error && error.message === "FORBIDDEN") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

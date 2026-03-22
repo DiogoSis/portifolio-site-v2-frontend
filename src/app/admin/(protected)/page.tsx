@@ -21,7 +21,7 @@ export default function AdminHomePage() {
           <p className="font-mono text-sm text-accent-500">/admin/dashboard</p>
           <h1 className="font-heading text-3xl text-text-50">Painel Administrativo</h1>
           <p className="text-text-400">
-            Base local pronta. Proximos passos: CRUD admin e integracao Cognito real em ambiente AWS de desenvolvimento.
+            Acesso autenticado com Cognito. Use o painel para gerenciar conteudo administrativo.
           </p>
         </header>
 
@@ -45,7 +45,7 @@ export default function AdminHomePage() {
               <CardTitle className="font-heading text-text-50">Usuarios Admin</CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-text-300">
-              Preparado para integrar grupos `superadmin` e `editor` na fase Cognito.
+              Permissoes controladas pelos grupos Cognito `superadmin` e `editor`.
             </CardContent>
           </Card>
         </div>

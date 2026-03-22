@@ -10,7 +10,9 @@ type AdminRole = "superadmin" | "editor";
 export interface AdminSession {
   sub: string;
   email: string;
+  groups: string[];
   role: AdminRole;
+  idToken: string;
   exp: number;
 }
 
@@ -74,8 +76,65 @@ export function verifyAdminSessionToken(token: string | undefined): AdminSession
       return null;
     }
 
+    if (!Array.isArray(parsed.groups) || parsed.groups.length === 0) {
+      return null;
+    }
+
+    if (!parsed.idToken) {
+      return null;
+    }
+
     return parsed;
   } catch {
     return null;
   }
+}
+
+export interface CognitoIdClaims {
+  sub: string;
+  email: string;
+  exp: number;
+  token_use?: string;
+  "cognito:groups"?: string[];
+}
+
+function decodeBase64Url(input: string): string {
+  const normalized = input.replace(/-/g, "+").replace(/_/g, "/");
+  return Buffer.from(normalized, "base64").toString("utf8");
+}
+
+export function decodeCognitoIdToken(idToken: string): CognitoIdClaims | null {
+  const parts = idToken.split(".");
+  if (parts.length < 2) {
+    return null;
+  }
+
+  try {
+    const rawClaims = decodeBase64Url(parts[1]);
+    const claims = JSON.parse(rawClaims) as CognitoIdClaims;
+
+    if (!claims.sub || !claims.email || !claims.exp) {
+      return null;
+    }
+
+    if (claims.exp < Math.floor(Date.now() / 1000)) {
+      return null;
+    }
+
+    return claims;
+  } catch {
+    return null;
+  }
+}
+
+export function resolveAdminRole(groups: string[]): AdminRole | null {
+  if (groups.includes("superadmin")) {
+    return "superadmin";
+  }
+
+  if (groups.includes("editor")) {
+    return "editor";
+  }
+
+  return null;
 }
