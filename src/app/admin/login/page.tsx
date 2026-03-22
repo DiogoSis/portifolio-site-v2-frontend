@@ -93,10 +93,6 @@ export default function AdminLoginPage() {
               >
                 {loading ? "Entrando..." : "Entrar"}
               </Button>
-
-              <p className="text-xs text-text-400">
-                Modo local: configure `ADMIN_MOCK_USERNAME` e `ADMIN_MOCK_PASSWORD` no `.env.local`.
-              </p>
             </form>
           </CardContent>
         </Card>
