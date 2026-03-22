@@ -299,6 +299,10 @@ NEXT_PUBLIC_CHAT_API_URL=https://ofqpkinf8j.execute-api.us-east-1.amazonaws.com/
 COGNITO_REGION=us-east-1
 COGNITO_USER_POOL_CLIENT_ID=seu-client-id-aqui
 
+# Fallback para ambientes que expoem apenas NEXT_PUBLIC_
+NEXT_PUBLIC_COGNITO_REGION=us-east-1
+NEXT_PUBLIC_COGNITO_USER_POOL_CLIENT_ID=seu-client-id-aqui
+
 # Sessao admin (cookie httpOnly assinado)
 ADMIN_SESSION_SECRET=change-me-in-local
 ```
@@ -314,6 +318,8 @@ A area administrativa usa Cognito para autenticar usuarios e grupos (`superadmin
 3. Use um usuario existente no User Pool com grupo admin (`superadmin` ou `editor`)
 4. Apos login, voce sera redirecionado para `http://localhost:3000/admin`
 5. Use o botao `Sair` para limpar a sessao local
+
+Se aparecer a mensagem `Cognito nao configurado no frontend`, confirme as variaveis de ambiente acima e reinicie o servidor (`npm run dev`), pois o Next le as envs no boot.
 
 #### Como Obter as API Keys
 

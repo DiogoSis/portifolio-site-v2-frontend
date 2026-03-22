@@ -24,8 +24,14 @@ interface CognitoErrorPayload {
 }
 
 function getCognitoConfig() {
-  const region = process.env.COGNITO_REGION || "us-east-1";
-  const clientId = process.env.COGNITO_USER_POOL_CLIENT_ID || "";
+  const region =
+    process.env.COGNITO_REGION ||
+    process.env.NEXT_PUBLIC_COGNITO_REGION ||
+    "us-east-1";
+  const clientId =
+    process.env.COGNITO_USER_POOL_CLIENT_ID ||
+    process.env.NEXT_PUBLIC_COGNITO_USER_POOL_CLIENT_ID ||
+    "";
 
   return { region, clientId };
 }
@@ -105,7 +111,13 @@ export async function POST(request: NextRequest) {
     idToken = await authenticateWithCognito(body.username, body.password);
   } catch (error) {
     if (error instanceof Error && error.message === "COGNITO_NOT_CONFIGURED") {
-      return NextResponse.json({ error: "Cognito nao configurado no frontend" }, { status: 500 });
+      return NextResponse.json(
+        {
+          error:
+            "Cognito nao configurado no frontend (defina COGNITO_USER_POOL_CLIENT_ID ou NEXT_PUBLIC_COGNITO_USER_POOL_CLIENT_ID e reinicie o servidor)",
+        },
+        { status: 500 }
+      );
     }
 
     if (error instanceof Error && error.message === "INVALID_CREDENTIALS") {
