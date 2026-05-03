@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { HeroTerminal } from "@/components/home/hero-terminal";
 import { TechStackGrid } from "@/components/home/tech-stack-grid";
 import { CurrentFocusCard } from "@/components/home/current-focus-card";
+import { ParticleCanvas } from "@/components/home/particle-canvas";
 import { useChat } from "@/lib/hooks/use-chat";
 
 export default function Home() {
@@ -14,7 +15,8 @@ export default function Home() {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="min-h-[calc(100vh-4rem)] flex items-center py-12">
+      <section className="relative overflow-hidden min-h-[calc(100vh-4rem)] flex items-center py-12">
+        <ParticleCanvas />
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text Content */}
